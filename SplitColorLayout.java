@@ -6,11 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 
+import com.reali.app.R;
 
 /**
- * Created by Itzik Samara on 19/04/2016.
+ * Created by use on 19/04/2016.
  */
 public class SplitColorLayout extends FrameLayout
 {
@@ -18,22 +21,47 @@ public class SplitColorLayout extends FrameLayout
     private int mTopColor;
     private int mBottomColor;
 
+    private View mTopView;
+    private View mBottomView;
+
     public SplitColorLayout(Context context)
     {
         super(context);
-
+        initViews(context);
     }
 
     public SplitColorLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
         init(context, attrs);
+        initViews(context);
     }
 
     public SplitColorLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+        initViews(context);
+    }
+
+    @Override
+    protected void dispatchDraw(Canvas canvas)
+    {
+        mTopView.setBackgroundColor(getResources().getColor(mTopColor));
+        mBottomView.setBackgroundColor(getResources().getColor(mBottomColor));
+        super.dispatchDraw(canvas);
+
+
+    }
+
+    private void initViews(Context context)
+    {
+
+        View root = LayoutInflater.from(context).inflate(R.layout.view_split_color_layout, this, false);
+
+        mTopView = root.findViewById(R.id.view_split_color_top);
+        mBottomView = root.findViewById(R.id.view_split_color_bottom);
+        addView(root);
     }
 
 
@@ -48,32 +76,15 @@ public class SplitColorLayout extends FrameLayout
 
     }
 
-    @Override
-    protected void dispatchDraw(Canvas canvas)
-    {
-        int center = (getTop() + getBottom()) / 2;
-        Rect topRect = new Rect(getLeft(), getTop(), getRight(), center);
-        Rect bottomRect = new Rect(getLeft(), center, getRight(), getBottom());
-
-        Paint paint = new Paint();
-        paint.setColor(mTopColor);
-
-        canvas.drawRect(topRect, paint);
-        paint.setColor(mBottomColor);
-        canvas.drawRect(bottomRect, paint);
-
-        super.dispatchDraw(canvas);
-
-    }
 
     public void setTopColor(int color)
     {
-        mBottomColor = color;
+        mTopColor = color;
     }
 
     public void setBottomColor(int color)
     {
-        mTopColor = color;
+        mBottomColor = color;
     }
 
 
