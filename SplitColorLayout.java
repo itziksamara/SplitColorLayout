@@ -1,6 +1,7 @@
-package com.reali.app.views;
+package application.sportm.com.sportm.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -10,13 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.reali.app.R;
+import application.sportm.com.sportm.R;
+
 
 /**
  * Created by use on 19/04/2016.
  */
-public class SplitColorLayout extends FrameLayout
-{
+public class SplitColorLayout extends FrameLayout {
 
     private int mTopColor;
     private int mBottomColor;
@@ -24,38 +25,33 @@ public class SplitColorLayout extends FrameLayout
     private View mTopView;
     private View mBottomView;
 
-    public SplitColorLayout(Context context)
-    {
+    public SplitColorLayout(Context context) {
         super(context);
         initViews(context);
     }
 
-    public SplitColorLayout(Context context, AttributeSet attrs)
-    {
+    public SplitColorLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
         initViews(context);
     }
 
-    public SplitColorLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public SplitColorLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
         initViews(context);
     }
 
     @Override
-    protected void dispatchDraw(Canvas canvas)
-    {
-        mTopView.setBackgroundColor(getResources().getColor(mTopColor));
-        mBottomView.setBackgroundColor(getResources().getColor(mBottomColor));
+    protected void dispatchDraw(Canvas canvas) {
+        mTopView.setBackgroundColor(mTopColor);
+        mBottomView.setBackgroundColor(mBottomColor);
         super.dispatchDraw(canvas);
 
 
     }
 
-    private void initViews(Context context)
-    {
+    private void initViews(Context context) {
 
         View root = LayoutInflater.from(context).inflate(R.layout.view_split_color_layout, this, false);
 
@@ -65,25 +61,22 @@ public class SplitColorLayout extends FrameLayout
     }
 
 
-    private void init(Context context, AttributeSet attrs)
-    {
+    private void init(Context context, AttributeSet attrs) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SplitColorLayout);
 
 
-        mTopColor = a.getColor(R.styleable.SplitColorLayout_SplitColorLayout_TopColor, context.getResources().getColor(R.color.white));
-        mBottomColor = a.getColor(R.styleable.SplitColorLayout_SplitColorLayout_BottomColor, context.getResources().getColor(R.color.white));
+        mTopColor = a.getColor(R.styleable.SplitColorLayout_SplitColorLayout_TopColor,getResources().getColor(R.color.white));
+        mBottomColor = a.getColor(R.styleable.SplitColorLayout_SplitColorLayout_BottomColor, getResources().getColor(R.color.white));
         a.recycle();
 
     }
 
 
-    public void setTopColor(int color)
-    {
+    public void setTopColor(int color) {
         mTopColor = color;
     }
 
-    public void setBottomColor(int color)
-    {
+    public void setBottomColor(int color) {
         mBottomColor = color;
     }
 
